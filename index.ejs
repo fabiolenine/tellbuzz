@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br" ng-app="tbApp">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
@@ -9,12 +9,9 @@
     <!-- Compiled and minified CSS -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-<!--
-    <link href="min/plugin-min.css" type="text/css" rel="stylesheet">
-    <link href="min/custom-min.css" type="text/css" rel="stylesheet" >
--->
+
 </head>
-<body id="top" class="scrollspy">
+<body id="top" class="scrollspy" ng-controller = "tellbuzzControllerMain">
 
 	<!-- Pre Loader -->
 	<div id="loader-wrapper">
@@ -57,68 +54,17 @@
 	
 <div class="container">
 	<div class="row">
-		<div class="col s12 m6">
+		<div class="col s12 m6" ng-repeat="notice in dadosretorno">
 			<div class="card medium hoverable">
 				<div class="card-image">
-					<img src="http://imguol.com/c/home/77/2016/11/09/naftali-bennett-ministro-de-educacao-de-israel-1478689931421_142x100.jpg" expression="full" width="615" height="300" class="materialboxed">
-					<span class="card-title">Card Title</span>
+					<img src={{notice.src}} expression="full" width="615" height="300" class="materialboxed">
+					<span class="card-title">{{notice.title}}</span>
 				</div>
 				<div class="card-content">
-				  <p>I am a very simple card. I am good at containing small bits of information.
-				  I am convenient because I require little markup to use effectively.</p>
+				  <p>{{notice.description}}</p>
 				</div>
 				<div class="card-action">
-				  <a class="btn-floating btn-small waves-effect waves-light orange"><i class="material-icons">hearing</i></a>
-				  <a class="btn-floating btn-small waves-effect waves-light red"><i class="material-icons">stars</i></a>
-				</div>
-			</div>
-		</div>
-		<div class="col s12 m6">
-			<div class="card medium hoverable">
-				<div class="card-image">
-					<img src="http://imguol.com/c/home/47/2016/11/01/donald-trump-1478015142203_300x100.jpg" expression="full" width="615" height="300" class="materialboxed">
-					<span class="card-title">Card Title</span>
-				</div>
-				<div class="card-content">
-				  <p>I am a very simple card. I am good at containing small bits of information.
-				  I am convenient because I require little markup to use effectively.</p>
-				</div>
-				<div class="card-action">
-				  <a class="btn-floating btn-small waves-effect waves-light orange"><i class="material-icons">hearing</i></a>
-				  <a class="btn-floating btn-small waves-effect waves-light red"><i class="material-icons">stars</i></a>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col s12 m6">
-			<div class="card medium hoverable">
-				<div class="card-image">
-					<img src="http://imguol.com/c/home/77/2016/11/09/naftali-bennett-ministro-de-educacao-de-israel-1478689931421_142x100.jpg" expression="full" width="615" height="300" class="materialboxed">
-					<span class="card-title">Card Title</span>
-				</div>
-				<div class="card-content">
-				  <p>I am a very simple card. I am good at containing small bits of information.
-				  I am convenient because I require little markup to use effectively.</p>
-				</div>
-				<div class="card-action">
-				  <a class="btn-floating btn-small waves-effect waves-light orange"><i class="material-icons">hearing</i></a>
-				  <a class="btn-floating btn-small waves-effect waves-light red"><i class="material-icons">stars</i></a>
-				</div>
-			</div>
-		</div>
-		<div class="col s12 m6">
-			<div class="card medium hoverable">
-				<div class="card-image">
-					<img src="http://imguol.com/c/home/47/2016/11/01/donald-trump-1478015142203_300x100.jpg" expression="full" width="615" height="300" class="materialboxed">
-					<span class="card-title">Card Title</span>
-				</div>
-				<div class="card-content">
-				  <p>I am a very simple card. I am good at containing small bits of information.
-				  I am convenient because I require little markup to use effectively.</p>
-				</div>
-				<div class="card-action">
-				  <a class="btn-floating btn-small waves-effect waves-light orange"><i class="material-icons">hearing</i></a>
+				  <a class="btn-floating btn-small waves-effect waves-light orange" ng-click="voice(notice.id)"><i class="material-icons">hearing</i></a>
 				  <a class="btn-floating btn-small waves-effect waves-light red"><i class="material-icons">stars</i></a>
 				</div>
 			</div>
@@ -130,23 +76,9 @@
     <script   src="http://code.jquery.com/jquery-2.2.4.min.js"   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="   crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
-	<script>
-		$('.dropdown-button').dropdown({
-      inDuration: 300,
-      outDuration: 225,
-      constrain_width: false, // Does not change width of dropdown to that of the activator
-      hover: true, // Activate on hover
-      gutter: 0, // Spacing from edge
-      belowOrigin: false, // Displays dropdown below the button
-      alignment: 'left' // Displays dropdown with edge aligned to the left of button
-    }
-  );
-	</script>
-<!--
-	<script src="min/plugin-min.js"></script>
-    <script src="min/custom-min.js"></script>
--->
-	
+	<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+	<script src="./js/tellbuzzCTRLMain.js"></script>
+	<script src="./js/tellbuzzCore.js"></script>
 
     </body>
 </html>
