@@ -1,1 +1,0 @@
-var tbApp = angular.module("tbApp",["tellbuzzCTRLMain"]);
